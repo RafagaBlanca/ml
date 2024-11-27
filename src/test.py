@@ -1,17 +1,58 @@
-import pandas as pd
-from validation import hold_out
-from validation import k_fold_cross_validation
-from validation import leave_one_out
+'''
+from check import *
 
-X = [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]]
-y = [0, 1, 0, 1, 0]
+# Ejemplo de datos
+y_true = [0, 1, 1, 0, 1, 0, 1, 0]
+y_pred = [0, 1, 0, 0, 1, 0, 1, 1]
 
-# Aplicar Leave-One-Out
-folds = leave_one_out(X, y)
+# Calcular Accuracy y Error
+accuracy = accuracy_score(y_true, y_pred)
+error = 1 - accuracy
 
-for i, (X_train, X_val, y_train, y_val) in enumerate(folds, 1):
-    print(f"Iteración {i}:")
-    print(f"  X_train: {X_train}")
-    print(f"  X_val: {X_val}")
-    print(f"  y_train: {y_train}")
-    print(f"  y_val: {y_val}")
+# Generar Matriz de Confusión
+conf_matrix = confusion_matrix_binary(y_true, y_pred)
+tp, tn, fp, fn = conf_matrix["TP"], conf_matrix["TN"], conf_matrix["FP"], conf_matrix["FN"]
+
+# Calcular Medidas
+precision_value = precision(tp, fp)
+recall_value = recall(tp, fn)
+tnr = true_negative_rate(tn, fp)
+fpr = false_positive_rate(fp, tn)
+fnr = false_negative_rate(fn, tp)
+f1 = f1_score(tp, fp, fn)
+
+# Imprimir resultados
+print(f"Accuracy: {accuracy:.4f}")
+print(f"Error: {error:.4f}")
+print(f"Precision: {precision_value:.4f}")
+print(f"Recall: {recall_value:.4f}")
+print(f"True Negative Rate: {tnr:.4f}")
+print(f"False Positive Rate: {fpr:.4f}")
+print(f"False Negative Rate: {fnr:.4f}")
+print(f"F1-Score: {f1:.4f}")
+'''
+
+from sklearn.metrics import (
+    accuracy_score, confusion_matrix, precision_score, recall_score, f1_score
+)
+
+# Ejemplo de datos
+y_true = [0, 1, 1, 0, 1, 0, 1, 0]
+y_pred = [0, 1, 0, 0, 1, 0, 1, 1]
+
+# Accuracy y Matriz de Confusión
+accuracy = accuracy_score(y_true, y_pred)
+conf_matrix = confusion_matrix(y_true, y_pred)
+
+# Precision, Recall, F1-Score
+precision_value = precision_score(y_true, y_pred)
+recall_value = recall_score(y_true, y_pred)
+f1 = f1_score(y_true, y_pred)
+
+# Imprimir resultados
+print(f"Accuracy (sklearn): {accuracy:.4f}")
+print("Confusion Matrix:")
+print(conf_matrix)
+print(f"Precision (sklearn): {precision_value:.4f}")
+print(f"Recall (sklearn): {recall_value:.4f}")
+print(f"F1-Score (sklearn): {f1:.4f}")
